@@ -1,672 +1,266 @@
 <!DOCTYPE html>
 <html lang="az">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VatanUC - PUBG Mobile UC Satış Mağazası</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VatanUC — PUBG Mobile UC Mağazası</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0c1016; --bg-soft:#141a23; --panel:#171e28; --line:#262f3c;
+    --ink:#eef1f5; --ink-dim:#8c97a8;
+    --gold:#f4b740; --gold-dim:#8a6c27;
+    --ember:#ff6a3d;
+    --ok:#4cc38a; --no:#e8536b;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:
+      radial-gradient(900px 500px at 85% -10%, rgba(244,183,64,.08), transparent 60%),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    line-height:1.5;
+  }
+  h1,h2,h3,.brand{font-family:'Oswald',sans-serif;letter-spacing:.2px}
+  a{color:inherit}
+  img{max-width:100%}
+  :focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+  @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
 
-        body {
-            background-color: #0f172a;
-            color: #fff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
+  .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
 
-        /* BANNER SECTION (ALTYN REŇKLI MUGT 360 UC BÖLÜMI) */
-        .free-banner {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            border: 2px solid #fbbf24;
-            border-radius: 12px;
-            padding: 25px;
-            width: 100%;
-            max-width: 1200px;
-            margin-bottom: 30px;
-            text-align: center;
-            box-shadow: 0 10px 25px -5px rgba(245, 158, 11, 0.4);
-            color: #78350f;
-        }
+  /* header */
+  header.site{
+    position:sticky;top:0;z-index:20;
+    background:rgba(12,16,22,.85);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:16px 20px}
+  .brand{font-size:1.3rem;font-weight:700;color:var(--ink);display:flex;align-items:center;gap:8px}
+  .brand span{color:var(--gold)}
+  .tabs{display:flex;gap:6px;flex-wrap:wrap}
+  .tab{
+    background:none;border:1px solid var(--line);color:var(--ink-dim);
+    padding:8px 16px;border-radius:999px;font:inherit;font-size:.88rem;cursor:pointer;
+    transition:background .15s,color .15s,border-color .15s;
+  }
+  .tab:hover{color:var(--ink);border-color:var(--gold-dim)}
+  .tab.active{background:var(--gold);color:#201604;border-color:var(--gold);font-weight:600}
 
-        .free-banner h2 {
-            font-size: 2rem;
-            color: #fff;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
-            margin-bottom: 8px;
-        }
+  /* hero */
+  .hero{padding:56px 20px 36px}
+  .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center}
+  @media (max-width:860px){.hero-grid{grid-template-columns:1fr}}
+  .hero h1{font-size:clamp(2rem,4vw,2.9rem);line-height:1.08;font-weight:700}
+  .hero p.lead{color:var(--ink-dim);margin-top:14px;max-width:46ch}
 
-        .free-banner p {
-            color: #fef3c7;
-            font-size: 1rem;
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
+  .gift-panel{
+    background:linear-gradient(160deg,#1c1407,#14100a 60%,var(--panel));
+    border:1px solid var(--gold-dim);
+    border-radius:var(--radius);
+    padding:26px;position:relative;overflow:hidden;
+  }
+  .gift-panel::before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(260px 160px at 90% 0%, rgba(244,183,64,.18), transparent 70%);
+  }
+  .gift-panel h2{color:var(--gold);font-size:1.5rem;position:relative}
+  .gift-panel p{color:var(--ink-dim);margin:8px 0 18px;font-size:.92rem;position:relative}
+  .gift-form{display:flex;gap:8px;flex-wrap:wrap;position:relative}
+  .gift-form input{
+    flex:1;min-width:200px;padding:12px 14px;border-radius:9px;
+    border:1px solid var(--line);background:var(--bg-soft);color:var(--ink);font:inherit;
+  }
+  .gift-form input:focus{border-color:var(--gold)}
+  .gift-form button{
+    padding:12px 22px;border:none;border-radius:9px;background:var(--gold);
+    color:#201604;font-weight:700;cursor:pointer;font:inherit;
+    transition:transform .12s;
+  }
+  .gift-form button:hover{transform:translateY(-1px)}
 
-        .free-form {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            max-width: 500px;
-            margin: 0 auto;
-            flex-wrap: wrap;
-        }
+  .trust{display:flex;gap:28px;flex-wrap:wrap;margin-top:34px;color:var(--ink-dim);font-size:.88rem}
+  .trust span{display:flex;align-items:center;gap:8px}
 
-        .free-form input {
-            flex: 1;
-            min-width: 220px;
-            padding: 12px 15px;
-            border-radius: 8px;
-            border: 2px solid #fef3c7;
-            background: #fff;
-            color: #0f172a;
-            font-size: 1rem;
-            outline: none;
-            font-weight: bold;
-        }
+  /* products */
+  .section-title{padding:34px 20px 6px}
+  .section-title h2{font-size:1.5rem}
+  .section-title p{color:var(--ink-dim);font-size:.92rem;margin-top:4px}
 
-        .free-form button {
-            padding: 12px 25px;
-            background-color: #78350f;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
+  .grid{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+    gap:16px;padding:20px;
+  }
+  .card{
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    padding:20px;display:flex;flex-direction:column;justify-content:space-between;
+    position:relative;transition:border-color .15s,transform .15s;
+  }
+  .card:hover{border-color:var(--gold-dim);transform:translateY(-3px)}
+  .card.out{opacity:.55}
+  .badge{
+    position:absolute;top:16px;right:16px;background:var(--ember);color:#fff;
+    font-size:.78rem;font-weight:700;padding:3px 9px;border-radius:7px;
+  }
+  .cat{font-size:.74rem;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+  .card h3{font-size:1.5rem;margin-bottom:6px}
+  .desc{color:var(--ink-dim);font-size:.84rem;min-height:34px;margin-bottom:10px}
+  .status{font-size:.82rem;font-weight:600;margin-bottom:4px}
+  .status.yes{color:var(--ok)}
+  .status.no{color:var(--no)}
+  .pts{font-size:.78rem;color:var(--gold);margin-bottom:14px}
+  .price-row{display:flex;align-items:baseline;gap:10px;margin-bottom:16px}
+  .old{text-decoration:line-through;color:#5c6372;font-size:.95rem}
+  .now{font-size:1.6rem;font-weight:700;color:var(--ok)}
+  .card.out .now{color:#5c6372}
+  .btns{display:flex;gap:8px}
+  .btn{
+    flex:1;text-align:center;padding:10px;border-radius:9px;text-decoration:none;
+    font-weight:600;font-size:.88rem;transition:background .15s;
+  }
+  .btn-cart{background:var(--bg-soft);color:var(--ink);border:1px solid var(--line)}
+  .btn-cart:hover{background:#202834}
+  .btn-buy{background:var(--gold);color:#201604}
+  .btn-buy:hover{background:#ffcb63}
+  .btn-off{background:var(--bg-soft);color:#4a515e;border:1px solid var(--line);pointer-events:none}
 
-        .free-form button:hover {
-            background-color: #451a03;
-        }
+  footer{border-top:1px solid var(--line);padding:30px 20px;text-align:center;color:var(--ink-dim);font-size:.85rem;margin-top:30px}
 
-        header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        header h1 {
-            font-size: 2.5rem;
-            color: #38bdf8;
-            margin-bottom: 10px;
-        }
-
-        header p {
-            color: #94a3b8;
-            font-size: 1.1rem;
-        }
-
-        .container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            width: 100%;
-            max-width: 1200px;
-        }
-
-        .card {
-            background-color: #1e293b;
-            border: 1px solid #334155;
-            border-radius: 12px;
-            padding: 20px;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: transform 0.3s ease, border-color 0.3s ease;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            border-color: #38bdf8;
-        }
-
-        .badge-discount {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background-color: #ef4444;
-            color: white;
-            padding: 4px 8px;
-            font-size: 0.85rem;
-            font-weight: bold;
-            border-radius: 6px;
-        }
-
-        .category {
-            font-size: 0.85rem;
-            color: #38bdf8;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
-        }
-
-        .card h3 {
-            font-size: 1.6rem;
-            color: #f8fafc;
-            margin-bottom: 8px;
-        }
-
-        .desc {
-            font-size: 0.85rem;
-            color: #94a3b8;
-            margin-bottom: 15px;
-            min-height: 35px;
-        }
-
-        .status {
-            font-size: 0.85rem;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-
-        .status.available {
-            color: #4ade80;
-        }
-
-        .status.out {
-            color: #f87171;
-        }
-
-        .points {
-            font-size: 0.8rem;
-            color: #fbbf24;
-            margin-bottom: 12px;
-        }
-
-        .price-box {
-            display: flex;
-            align-items: baseline;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .old-price {
-            text-decoration: line-through;
-            color: #64748b;
-            font-size: 1rem;
-        }
-
-        .current-price {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #4ade80;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 10px;
-        }
-
-        .btn {
-            flex: 1;
-            padding: 10px;
-            text-align: center;
-            text-decoration: none;
-            font-weight: bold;
-            border-radius: 8px;
-            transition: background-color 0.2s ease;
-            font-size: 0.9rem;
-        }
-
-        .btn-cart {
-            background-color: #334155;
-            color: #f8fafc;
-        }
-
-        .btn-cart:hover {
-            background-color: #475569;
-        }
-
-        .btn-buy {
-            background-color: #0284c7;
-            color: white;
-        }
-
-        .btn-buy:hover {
-            background-color: #0369a1;
-        }
-
-        .btn-disabled {
-            background-color: #1e293b;
-            color: #64748b;
-            border: 1px solid #334155;
-            pointer-events: none;
-        }
-
-        footer {
-            margin-top: 50px;
-            color: #64748b;
-            font-size: 0.9rem;
-            text-align: center;
-        }
-    </style>
+  .wa-float{
+    position:fixed;bottom:22px;right:22px;z-index:30;
+    width:56px;height:56px;border-radius:50%;background:var(--gold);
+    display:flex;align-items:center;justify-content:center;font-size:1.5rem;
+    box-shadow:0 8px 24px rgba(244,183,64,.35);text-decoration:none;
+  }
+</style>
 </head>
 <body>
-    <div class="free-banner">
-        <h2> 360 UC PULSUZ QAZAN!</h2>
-        <p>PUBG Mobile Gmail-nizi yazın və hədiyyə 360 UC şansını əldə edin!</p>
-        
-        <form class="free-form" action="https://api.web3forms.com/submit" method="POST">
-            <!-- Web3Forms Access Key (Bura öz açarınızı yazın) -->
-            <input type="hidden" name="access_key" value="811b803d-918c-46ce-8e05-15a9b87cb9fb">
-            <input type="hidden" name="subject" value="Təbrik! Yeni 360 UC Istəyi Var!">
-            
-            <input type="text" name="Mugt_UC_PUBG_ID" placeholder="PUBG Mobile Gmail daxil edin..." required>
-            <button type="submit">UC Al</button>
+
+<header class="site">
+  <div class="nav wrap">
+    <div class="brand">Vatan<span>UC</span></div>
+    <nav class="tabs" id="tabs">
+      <button class="tab active" data-cat="all">Hamısı</button>
+      <button class="tab" data-cat="uc">UC Paketləri</button>
+      <button class="tab" data-cat="bundle">Bonuslu Paketlər</button>
+      <button class="tab" data-cat="premium">Xüsusi Əşyalar</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="hero-grid">
+      <div>
+        <h1>PUBG Mobile ID-nizə<br>ani UC yükləməsi</h1>
+        <p class="lead">Rəsmi qiymətlərlə, dərhal hesabınıza. Sifarişi seçin, WhatsApp üzərindən bir neçə dəqiqəyə təsdiqləyin.</p>
+        <div class="trust">
+          <span>⚡ Ani çatdırılma</span>
+          <span>🔒 Təhlükəsiz ödəniş</span>
+          <span>💬 WhatsApp dəstək</span>
+        </div>
+      </div>
+      <div class="gift-panel">
+        <h2>360 UC pulsuz qazan</h2>
+        <p>PUBG Mobile Gmail ünvanınızı yazın, çəkilişə qoşulun.</p>
+        <form class="gift-form" action="https://api.web3forms.com/submit" method="POST">
+          <input type="hidden" name="access_key" value="811b803d-918c-46ce-8e05-15a9b87cb9fb">
+          <input type="hidden" name="subject" value="Yeni 360 UC İştirakçısı">
+          <input type="email" name="Mugt_UC_PUBG_ID" placeholder="Gmail ünvanınız" required>
+          <button type="submit">Qoşul</button>
         </form>
+      </div>
     </div>
-    <header>
-        <h1>VatanUC PUBG Mağazası</h1>
-        <p>Sürətli, Etibarlı və Dərhal ID-yə Yükləmə Xidməti</p>
-    </header>
+  </section>
 
-    <div class="container">
+  <div class="section-title">
+    <h2>Paketlər</h2>
+    <p>ID-nizi daxil etməyə ehtiyac yoxdur — sifariş WhatsApp üzərindən tamamlanır.</p>
+  </div>
+  <div class="grid" id="grid"></div>
+</main>
 
-        <!-- 10 UC -->
-        <div class="card">
-            <span class="badge-discount">-31%</span>
-            <div>
-                <div class="category">ID Yükləmə</div>
-                <h3>10 UC</h3>
-                <div class="desc">PUBG Mobile ID hesabınıza yüklənir</div>
-                <div class="status available">Mövcuddur</div>
-                <div class="points">+1 xal</div>
-            </div>
-            <div>
-                <div class="price-box">
-                    <span class="old-price">1.30 AZN</span>
-                    <span class="current-price">1.00 AZN</span>
-                </div>
-                <div class="btn-group">
-                    <a href="https://wa.me/994AZERBAYCAN_NUMARANIZ" class="btn btn-cart">Səbətə</a>
-                    <a href="https://wa.me/994AZERBAYCAN_NUMARANIZ" class="btn btn-buy">İndi Al</a>
-                </div>
-            </div>
-        </div>
+<footer>© 2026 VatanUC. Bütün hüquqlar qorunur.</footer>
+<a class="wa-float" href="#" id="waFloat" aria-label="WhatsApp ilə əlaqə">💬</a>
 
-        <!-- 30 UC -->
-        <div class="card">
-            <span class="badge-discount">-10%</span>
-            <div>
-                <div class="category">ID Yükləmə</div>
-                <h3>30 UC</h3>
-                <div class="desc">PUBG Mobile ID hesabınıza yüklənir</div>
-                <div class="status available">Mövcuddur</div>
-                <div class="points">+2 xal</div>
-            </div>
-            <div>
-                <div class="price-box">
-                    <span class="old-price">1.70 AZN</span>
-                    <span class="current-price">1.30 AZN</span>
-                </div>
-                <div class="btn-group">
-                    <a href="https://wa.me/994AZERBAYCAN_NUMARANIZ" class="btn btn-cart">Səbətə</a>
-                    <a href="https://wa.me/994AZERBAYCAN_NUMARANIZ" class="btn btn-buy">İndi Al</a>
-                </div>
-            </div>
-        </div>
+<script>
+// Tək yerdən dəyişin:
+const WHATSAPP_NUMBER = "994XXXXXXXXX"; // real nömrənizi bura yazın (994 ilə, boşluqsuz)
 
-        <!-- 60 UC -->
-        <div class="card">
-            <span class="badge-discount">-10%</span>
-            <div>
-                <div class="category">ID Yükləmə</div>
-                <h3>60 UC</h3>
-                <div class="desc">PUBG Mobile ID hesabınıza yüklənir</div>
-                <div class="status available">Mövcuddur</div>
-                <div class="points">+3 xal</div>
-            </div>
-            <div>
-                <div class="price-box">
-                    <span class="old-price">2.20 AZN</span>
-                    <span class="current-price">2.00 AZN</span>
-                </div>
-                <div class="btn-group">
-                    <a href="https://wa.me/994AZERBAYCAN_NUMARANIZ" class="btn btn-cart">Səbətə</a>
-                    <a href="https://wa.me/994AZERBAYCAN_NUMARANIZ" class="btn btn-buy">İndi Al</a>
-                </div>
-            </div>
-        </div>
+const PRODUCTS = [
+  {cat:"uc", title:"10 UC", desc:"PUBG Mobile ID hesabınıza yüklənir", price:1.00, old:1.30, pts:1, stock:true},
+  {cat:"uc", title:"30 UC", desc:"PUBG Mobile ID hesabınıza yüklənir", price:1.30, old:1.70, pts:2, stock:true},
+  {cat:"uc", title:"60 UC", desc:"PUBG Mobile ID hesabınıza yüklənir", price:2.00, old:2.20, pts:3, stock:true},
+  {cat:"bundle", title:"150 UC", desc:"Dərhal 60 UC + hər gün 3 UC (1 ay) + sandıq kuponu", price:3.70, pts:2, stock:true},
+  {cat:"uc", title:"120 UC", desc:"PUBG Mobile ID hesabınıza yüklənir", price:4.80, old:6.00, pts:3, stock:true},
+  {cat:"uc", title:"180 UC", desc:"PUBG Mobile ID hesabınıza yüklənir", price:5.95, old:6.70, pts:3, stock:true},
+  {cat:"bundle", title:"450 UC", desc:"Dərhal 180 UC + hər gün 3 UC (3 ay) + sandıq kuponu", price:7.51, pts:4, stock:true},
+  {cat:"uc", title:"336 UC", desc:"PUBG Mobile ID hesabınıza yüklənir", price:12.00, old:15.00, pts:6, stock:false},
+  {cat:"uc", title:"325 UC", desc:"PUBG Mobile ID hesabınıza yüklənir", price:13.45, old:14.00, pts:5, stock:true},
+  {cat:"uc", title:"385 UC", desc:"PUBG Mobile ID hesabınıza yüklənir", price:14.50, old:16.00, pts:5, stock:true},
+  {cat:"uc", title:"688 UC", desc:"PUBG Mobile ID hesabınıza yüklənir", price:26.00, old:28.00, pts:10, stock:false},
+  {cat:"uc", title:"660 UC", desc:"PUBG Mobile ID hesabınıza yüklənir", price:27.50, old:28.00, pts:10, stock:true},
+  {cat:"uc", title:"720 UC", desc:"PUBG Mobile ID hesabınıza yüklənir", price:31.55, pts:10, stock:true},
+  {cat:"uc", title:"985 UC", desc:"PUBG Mobile ID hesabınıza yüklənir", price:38.80, old:45.00, pts:10, stock:true},
+  {cat:"premium", title:"Karambit bıçağı", desc:"PUBG Mobile hesabınıza yüklənir", price:32.00, old:44.00, pts:30, stock:true},
+  {cat:"uc", title:"1800 UC", desc:"PUBG Mobile ID hesabınıza yüklənir", price:60.00, old:70.00, pts:20, stock:true},
+  {cat:"uc", title:"3850 UC", desc:"PUBG Mobile ID hesabınıza yüklənir", price:115.00, old:125.00, pts:40, stock:true},
+  {cat:"uc", title:"8100 UC", desc:"PUBG Mobile ID hesabınıza yüklənir", price:254.00, old:270.00, pts:50, stock:true},
+];
 
-        <!-- 150 UC -->
-        <div class="card">
-            <div>
-                <div class="category">ID Yükləmə</div>
-                <h3>150 UC</h3>
-                <div class="desc">Ümumi 150 UC: Dərhal 60 UC, Hər gün 3 UC (1 ay), əlavə sandıq kuponu</div>
-                <div class="status available">Mövcuddur</div>
-                <div class="points">+2 xal</div>
-            </div>
-            <div>
-                <div class="price-box">
-                    <span class="current-price">3.70 AZN</span>
-                </div>
-                <div class="btn-group">
-                    <a href="https://wa.me/994AZERBAYCAN_NUMARANIZ" class="btn btn-cart">Səbətə</a>
-                    <a href="https://wa.me/994AZERBAYCAN_NUMARANIZ" class="btn btn-buy">İndi Al</a>
-                </div>
-            </div>
-        </div>
+const CAT_LABEL = {uc:"ID Yükləmə", bundle:"Bonuslu Paket", premium:"Xüsusi Əşya"};
 
-        <!-- 120 UC -->
-        <div class="card">
-            <span class="badge-discount">-5%</span>
-            <div>
-                <div class="category">ID Yükləmə</div>
-                <h3>120 UC</h3>
-                <div class="desc">PUBG Mobile ID hesabınıza yüklənir</div>
-                <div class="status available">Mövcuddur</div>
-                <div class="points">+3 xal</div>
-            </div>
-            <div>
-                <div class="price-box">
-                    <span class="old-price">6.00 AZN</span>
-                    <span class="current-price">4.80 AZN</span>
-                </div>
-                <div class="btn-group">
-                    <a href="https://wa.me/994AZERBAYCAN_NUMARANIZ" class="btn btn-cart">Səbətə</a>
-                    <a href="https://wa.me/994AZERBAYCAN_NUMARANIZ" class="btn btn-buy">İndi Al</a>
-                </div>
-            </div>
-        </div>
+function waLink(title){
+  const text = encodeURIComponent(`Salam, "${title}" paketini sifariş etmək istəyirəm.`);
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
+}
 
-        <!-- 180 UC -->
-        <div class="card">
-            <span class="badge-discount">-13%</span>
-            <div>
-                <div class="category">ID Yükləmə</div>
-                <h3>180 UC</h3>
-                <div class="desc">PUBG Mobile ID hesabınıza yüklənir</div>
-                <div class="status available">Mövcuddur</div>
-                <div class="points">+3 xal</div>
-            </div>
-            <div>
-                <div class="price-box">
-                    <span class="old-price">6.70 AZN</span>
-                    <span class="current-price">5.95 AZN</span>
-                </div>
-                <div class="btn-group">
-                    <a href="https://wa.me/994AZERBAYCAN_NUMARANIZ" class="btn btn-cart">Səbətə</a>
-                    <a href="https://wa.me/994AZERBAYCAN_NUMARANIZ" class="btn btn-buy">İndi Al</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- 450 UC -->
-        <div class="card">
-            <div>
-                <div class="category">ID Yükləmə</div>
-                <h3>450 UC</h3>
-                <div class="desc">Ümumi 450 UC: Dərhal 180 UC, Hər gün 3 UC (3 ay), əlavə sandıq kuponu</div>
-                <div class="status available">Mövcuddur</div>
-                <div class="points">+4 xal</div>
-            </div>
-            <div>
-                <div class="price-box">
-                    <span class="current-price">7.51 AZN</span>
-                </div>
-                <div class="btn-group">
-                    <a href="https://wa.me/994AZERBAYCAN_NUMARANIZ" class="btn btn-cart">Səbətə</a>
-                    <a href="https://wa.me/994AZERBAYCAN_NUMARANIZ" class="btn btn-buy">İndi Al</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- 336 UC (Stok bitdi) -->
-        <div class="card" style="opacity: 0.7;">
-            <span class="badge-discount" style="background-color: #64748b;">-20%</span>
-            <div>
-                <div class="category">ID Yükləmə</div>
-                <h3>336 UC</h3>
-                <div class="desc">PUBG Mobile ID hesabınıza yüklənir</div>
-                <div class="status out">Stoklar bitdi</div>
-                <div class="points">+6 xal</div>
-            </div>
-            <div>
-                <div class="price-box">
-                    <span class="old-price">15.00 AZN</span>
-                    <span class="current-price" style="color: #94a3b8;">12.00 AZN</span>
-                </div>
-                <div class="btn-group">
-                    <a href="#" class="btn btn-disabled">Bitib</a>
-                    <a href="#" class="btn btn-disabled">Bitib</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- 325 UC -->
-        <div class="card">
-            <span class="badge-discount">-6%</span>
-            <div>
-                <div class="category">ID Yükləmə</div>
-                <h3>325 UC</h3>
-                <div class="desc">PUBG Mobile ID hesabınıza yüklənir</div>
-                <div class="status available">Mövcuddur</div>
-                <div class="points">+5 xal</div>
-            </div>
-            <div>
-                <div class="price-box">
-                    <span class="old-price">14.00 AZN</span>
-                    <span class="current-price">13.45 AZN</span>
-                </div>
-                <div class="btn-group">
-                    <a href="https://wa.me/994AZERBAYCAN_NUMARANIZ" class="btn btn-cart">Səbətə</a>
-                    <a href="https://wa.me/994AZERBAYCAN_NUMARANIZ" class="btn btn-buy">İndi Al</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- 385 UC -->
-        <div class="card">
-            <span class="badge-discount">-5%</span>
-            <div>
-                <div class="category">ID Yükləmə</div>
-                <h3>385 UC</h3>
-                <div class="desc">PUBG Mobile ID hesabınıza yüklənir</div>
-                <div class="status available">Mövcuddur</div>
-                <div class="points">+5 xal</div>
-            </div>
-            <div>
-                <div class="price-box">
-                    <span class="old-price">16.00 AZN</span>
-                    <span class="current-price">14.50 AZN</span>
-                </div>
-                <div class="btn-group">
-                    <a href="https://wa.me/994AZERBAYCAN_NUMARANIZ" class="btn btn-cart">Səbətə</a>
-                    <a href="https://wa.me/994AZERBAYCAN_NUMARANIZ" class="btn btn-buy">İndi Al</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- 688 UC (Stok bitdi) -->
-        <div class="card" style="opacity: 0.7;">
-            <span class="badge-discount" style="background-color: #64748b;">-11%</span>
-            <div>
-                <div class="category">ID Yükləmə</div>
-                <h3>688 UC</h3>
-                <div class="desc">PUBG Mobile ID hesabınıza yüklənir</div>
-                <div class="status out">Stoklar bitdi</div>
-                <div class="points">+10 xal</div>
-            </div>
-            <div>
-                <div class="price-box">
-                    <span class="old-price">28.00 AZN</span>
-                    <span class="current-price" style="color: #94a3b8;">26.00 AZN</span>
-                </div>
-                <div class="btn-group">
-                    <a href="#" class="btn btn-disabled">Bitib</a>
-                    <a href="#" class="btn btn-disabled">Bitib</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- 660 UC -->
-        <div class="card">
-            <span class="badge-discount">-3%</span>
-            <div>
-                <div class="category">ID Yükləmə</div>
-                <h3>660 UC</h3>
-                <div class="desc">PUBG Mobile ID hesabınıza yüklənir</div>
-                <div class="status available">Mövcuddur</div>
-                <div class="points">+10 xal</div>
-            </div>
-            <div>
-                <div class="price-box">
-                    <span class="old-price">28.00 AZN</span>
-                    <span class="current-price">27.50 AZN</span>
-                </div>
-                <div class="btn-group">
-                    <a href="https://wa.me/994AZERBAYCAN_NUMARANIZ" class="btn btn-cart">Səbətə</a>
-                    <a href="https://wa.me/994AZERBAYCAN_NUMARANIZ" class="btn btn-buy">İndi Al</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- 720 UC -->
-        <div class="card">
-            <div>
-                <div class="category">ID Yükləmə</div>
-                <h3>720 UC</h3>
-                <div class="desc">PUBG Mobile ID hesabınıza yüklənir</div>
-                <div class="status available">Mövcuddur</div>
-                <div class="points">+10 xal</div>
-            </div>
-            <div>
-                <div class="price-box">
-                    <span class="current-price">31.55 AZN</span>
-                </div>
-                <div class="btn-group">
-                    <a href="https://wa.me/994AZERBAYCAN_NUMARANIZ" class="btn btn-cart">Səbətə</a>
-                    <a href="https://wa.me/994AZERBAYCAN_NUMARANIZ" class="btn btn-buy">İndi Al</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- 985 UC -->
-        <div class="card">
-            <span class="badge-discount">-1%</span>
-            <div>
-                <div class="category">ID Yükləmə</div>
-                <h3>985 UC</h3>
-                <div class="desc">PUBG Mobile ID hesabınıza yüklənir</div>
-                <div class="status available">Mövcuddur</div>
-                <div class="points">+10 xal</div>
-            </div>
-            <div>
-                <div class="price-box">
-                    <span class="old-price">45.00 AZN</span>
-                    <span class="current-price">38.80 AZN</span>
-                </div>
-                <div class="btn-group">
-                    <a href="https://wa.me/994AZERBAYCAN_NUMARANIZ" class="btn btn-cart">Səbətə</a>
-                    <a href="https://wa.me/994AZERBAYCAN_NUMARANIZ" class="btn btn-buy">İndi Al</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Karambit bıçağı -->
-        <div class="card">
-            <span class="badge-discount">-27%</span>
-            <div>
-                <div class="category">ID Yükləmə</div>
-                <h3>Karambit bıçağı</h3>
-                <div class="desc">PUBG Mobile hesabınıza yüklənir</div>
-                <div class="status available">Mövcuddur</div>
-                <div class="points">+30 xal</div>
-            </div>
-            <div>
-                <div class="price-box">
-                    <span class="old-price">44.00 AZN</span>
-                    <span class="current-price">32.00 AZN</span>
-                </div>
-                <div class="btn-group">
-                    <a href="https://wa.me/994AZERBAYCAN_NUMARANIZ" class="btn btn-cart">Səbətə</a>
-                    <a href="https://wa.me/994AZERBAYCAN_NUMARANIZ" class="btn btn-buy">İndi Al</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- 1800 UC -->
-        <div class="card">
-            <span class="badge-discount">-5%</span>
-            <div>
-                <div class="category">ID Yükləmə</div>
-                <h3>1800 UC</h3>
-                <div class="desc">PUBG Mobile ID hesabınıza yüklənir</div>
-                <div class="status available">Mövcuddur</div>
-                <div class="points">+20 xal</div>
-            </div>
-            <div>
-                <div class="price-box">
-                    <span class="old-price">70.00 AZN</span>
-                    <span class="current-price">60.00 AZN</span>
-                </div>
-                <div class="btn-group">
-                    <a href="https://wa.me/994AZERBAYCAN_NUMARANIZ" class="btn btn-cart">Səbətə</a>
-                    <a href="https://wa.me/994AZERBAYCAN_NUMARANIZ" class="btn btn-buy">İndi Al</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- 3850 UC -->
-        <div class="card">
-            <span class="badge-discount">-2%</span>
-            <div>
-                <div class="category">ID Yükləmə</div>
-                <h3>3850 UC</h3>
-                <div class="desc">PUBG Mobile ID hesabınıza yüklənir</div>
-                <div class="status available">Mövcuddur</div>
-                <div class="points">+40 xal</div>
-            </div>
-            <div>
-                <div class="price-box">
-                    <span class="old-price">125.00 AZN</span>
-                    <span class="current-price">115.00 AZN</span>
-                </div>
-                <div class="btn-group">
-                    <a href="https://wa.me/994AZERBAYCAN_NUMARANIZ" class="btn btn-cart">Səbətə</a>
-                    <a href="https://wa.me/994AZERBAYCAN_NUMARANIZ" class="btn btn-buy">İndi Al</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- 8100 UC -->
-        <div class="card">
-            <span class="badge-discount">-9%</span>
-            <div>
-                <div class="category">ID Yükləmə</div>
-                <h3>8100 UC</h3>
-                <div class="desc">PUBG Mobile ID hesabınıza yüklənir</div>
-                <div class="status available">Mövcuddur</div>
-                <div class="points">+50 xal</div>
-            </div>
-            <div>
-                <div class="price-box">
-                    <span class="old-price">270.00 AZN</span>
-                    <span class="current-price">254.00 AZN</span>
-                </div>
-                <div class="btn-group">
-                    <a href="https://wa.me/994AZERBAYCAN_NUMARANIZ" class="btn btn-cart">Səbətə</a>
-                    <a href="https://wa.me/994AZERBAYCAN_NUMARANIZ" class="btn btn-buy">İndi Al</a>
-                </div>
-            </div>
-        </div>
-
+function cardHTML(p){
+  const discount = p.old ? Math.round((p.old - p.price) / p.old * 100) : null;
+  const link = waLink(p.title);
+  return `
+  <div class="card ${p.stock ? '' : 'out'}" data-cat="${p.cat}">
+    ${discount ? `<span class="badge">-${discount}%</span>` : ""}
+    <div>
+      <div class="cat">${CAT_LABEL[p.cat]}</div>
+      <h3>${p.title}</h3>
+      <div class="desc">${p.desc}</div>
+      <div class="status ${p.stock ? 'yes' : 'no'}">${p.stock ? 'Mövcuddur' : 'Stoklar bitdi'}</div>
+      <div class="pts">+${p.pts} xal</div>
     </div>
+    <div>
+      <div class="price-row">
+        ${p.old ? `<span class="old">${p.old.toFixed(2)} AZN</span>` : ""}
+        <span class="now">${p.price.toFixed(2)} AZN</span>
+      </div>
+      <div class="btns">
+        ${p.stock
+          ? `<a href="${link}" class="btn btn-cart">Səbətə</a><a href="${link}" class="btn btn-buy">İndi Al</a>`
+          : `<span class="btn btn-off">Bitib</span><span class="btn btn-off">Bitib</span>`}
+      </div>
+    </div>
+  </div>`;
+}
 
-    <footer>
-        <p>&copy; 2026 VatanUC. Bütün hüquqlar qorunur.</p>
-    </footer>
+const grid = document.getElementById('grid');
+grid.innerHTML = PRODUCTS.map(cardHTML).join('');
+document.getElementById('waFloat').href = waLink("Ümumi sual");
 
+document.getElementById('tabs').addEventListener('click', e => {
+  const btn = e.target.closest('.tab');
+  if (!btn) return;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  const cat = btn.dataset.cat;
+  document.querySelectorAll('.card').forEach(c => {
+    c.style.display = (cat === 'all' || c.dataset.cat === cat) ? '' : 'none';
+  });
+});
+</script>
 </body>
 </html>
